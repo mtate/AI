@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ElectraHub Insights Report</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #4b5563;
+      --line: #dbe3ef;
+      --accent: #0f766e;
+      --accent-soft: #e6f7f4;
+      --warn: #92400e;
+      --warn-soft: #fff7ed;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      background: linear-gradient(135deg, #eef4ff 0%, #f8fbff 40%, #f3fbf8 100%);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 28px auto;
+      padding: 0 16px 40px;
+    }
+
+    .hero {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 22px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      color: #0f172a;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+    }
+
+    .col-12 { grid-column: span 12; }
+    .col-6 { grid-column: span 6; }
+
+    @media (max-width: 900px) {
+      .col-6 { grid-column: span 12; }
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      color: #111827;
+    }
+
+    p { margin: 0 0 10px; }
+
+    ul {
+      margin: 8px 0 0 18px;
+      padding: 0;
+    }
+
+    li { margin-bottom: 8px; }
+
+    .kpi {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .kpi { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    .kpi-box {
+      background: var(--accent-soft);
+      border: 1px solid #bfe9e4;
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+
+    .kpi-label {
+      color: #0f4f49;
+      font-size: 12px;
+      margin-bottom: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .kpi-value {
+      font-size: 18px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 14px;
+      background: #fff;
+    }
+
+    th, td {
+      border: 1px solid var(--line);
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f8fafc;
+      color: #111827;
+      font-weight: 700;
+    }
+
+    .note {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: var(--warn-soft);
+      border: 1px solid #fed7aa;
+      color: var(--warn);
+      font-size: 14px;
+    }
+
+    .footer {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <h1>ElectraHub Sales Insights Report</h1>
+      <p class="subtitle">
+        Business-focused summary of sales patterns, campaign performance, and model results.
+      </p>
+    </section>
+
+    <div class="grid">
+      <section class="card col-12">
+        <h2>1) Business Problem Summary</h2>
+        <p>
+          ElectraHub wants to understand what most influences product sales so the team can invest
+          marketing budget better, choose stronger campaign mixes, and improve product presentation.
+        </p>
+        <p>
+          The goal is to predict sales and turn those findings into practical actions for the
+          marketing and merchandising teams.
+        </p>
+      </section>
+
+      <section class="card col-12">
+        <h2>2) Key EDA Findings (with actual numbers)</h2>
+        <div class="kpi">
+          <div class="kpi-box">
+            <div class="kpi-label">Rows / Columns</div>
+            <div class="kpi-value">3,000 / 16</div>
+          </div>
+          <div class="kpi-box">
+            <div class="kpi-label">Missing Values</div>
+            <div class="kpi-value">0</div>
+          </div>
+          <div class="kpi-box">
+            <div class="kpi-label">Duplicate Rows</div>
+            <div class="kpi-value">0</div>
+          </div>
+          <div class="kpi-box">
+            <div class="kpi-label">Train / Test Split</div>
+            <div class="kpi-value">2,400 / 600</div>
+          </div>
+        </div>
+
+        <ul>
+          <li>Sales range is <strong>$2,500</strong> to <strong>$40,000</strong>; average sales is <strong>$26,252.86</strong>.</li>
+          <li>Strongest sales relationships in EDA were:
+            Campaign Engagement Score (<strong>0.7223</strong>),
+            Advertising Expenditure (<strong>0.6532</strong>),
+            Avg Customer Rating (<strong>0.4414</strong>),
+            and Discount Percentage (<strong>0.2745</strong>).
+          </li>
+          <li>Popularity distribution is healthy across levels:
+            Very Low <strong>90</strong>, Low <strong>420</strong>, Moderate <strong>660</strong>,
+            High <strong>990</strong>, Very High <strong>840</strong>.
+          </li>
+          <li>Some columns have extreme values (for example review counts), but no hard data-quality failures were found.</li>
+        </ul>
+      </section>
+
+      <section class="card col-12">
+        <h2>3) Model Results (Test Set Comparison)</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>R²</th>
+              <th>Adjusted R²</th>
+              <th>RMSE</th>
+              <th>MAE</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Naive baseline (train average)</td>
+              <td>-0.0019</td>
+              <td>-0.0019</td>
+              <td>7,053.06</td>
+              <td>5,707.65</td>
+            </tr>
+            <tr>
+              <td>Simple LR: Campaign Engagement Score</td>
+              <td>0.5439</td>
+              <td>0.5431</td>
+              <td>4,758.87</td>
+              <td>3,768.53</td>
+            </tr>
+            <tr>
+              <td>Simple LR: Advertising Expenditure</td>
+              <td>0.4565</td>
+              <td>0.4556</td>
+              <td>5,194.56</td>
+              <td>4,192.74</td>
+            </tr>
+            <tr>
+              <td>Simple LR: Avg Customer Rating</td>
+              <td>0.1552</td>
+              <td>0.1538</td>
+              <td>6,476.28</td>
+              <td>5,208.20</td>
+            </tr>
+            <tr>
+              <td>Multiple LR: All encoded predictors</td>
+              <td><strong>0.9160</strong></td>
+              <td><strong>0.9132</strong></td>
+              <td><strong>2,042.24</strong></td>
+              <td><strong>1,644.33</strong></td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="note">
+          Bottom line: the full model explains sales much better than any single-variable model.
+        </p>
+      </section>
+
+      <section class="card col-6">
+        <h2>4) Recommendations for Marketing Team</h2>
+        <ul>
+          <li>Prioritize campaigns that raise engagement, because this is the strongest single driver in simple models.</li>
+          <li>Use ad budget increases carefully where engagement potential is high; budget alone helps, but less than engagement quality.</li>
+          <li>Expand influencer campaigns in segments where performance is strong (model shows about <strong>$917</strong> lift vs email, all else equal).</li>
+          <li>Use this model for planning scenarios before launch (for example budget shifts, channel mix, and expected sales impact).</li>
+        </ul>
+      </section>
+
+      <section class="card col-6">
+        <h2>5) Recommendations for Merchandising Team</h2>
+        <ul>
+          <li>Protect and improve customer ratings: moving rating from 3.8 to 4.2 links to an estimated sales gain of about <strong>$9,629</strong> in the simple model.</li>
+          <li>Strengthen content and product presentation for low-popularity items first to move them into higher popularity bands.</li>
+          <li>Plan inventory with campaign plans together, so top campaigns are fully supported when demand spikes.</li>
+          <li>Keep controlled discounting: discounts help, but should be combined with strong campaign engagement and product quality.</li>
+        </ul>
+      </section>
+
+      <section class="card col-12">
+        <h2>6) Known Model Limitations</h2>
+        <ul>
+          <li>The model learns from historical data only; future market changes can reduce accuracy.</li>
+          <li>Some predictors move together strongly, which can make individual coefficient values less stable even if total prediction quality is strong.</li>
+          <li>The model does not include outside factors such as seasonality, competitor promotions, or stockouts unless they are already captured in current columns.</li>
+          <li>Relationship strength does not prove cause-and-effect; recommendations should be validated with controlled tests when possible.</li>
+          <li>Popularity was converted into an ordered scale; if business meaning changes, this should be revisited.</li>
+        </ul>
+      </section>
+    </div>
+
+    <p class="footer">Prepared for ElectraHub business review.</p>
+  </div>
+</body>
+</html>
