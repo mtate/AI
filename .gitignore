@@ -1,0 +1,34 @@
+ini# 1. Dependency directories (Never commit external packages)
+node_modules/
+vendor/
+.venv/
+env/
+
+# 2. Sensitive files and secrets (Crucial for security!)
+.env
+.env.local
+*.pem
+*.key
+config/secrets.json
+
+# 3. System and OS-specific files
+.DS_Store
+__MACOSX
+__pycache__
+Thumbs.db
+ehthumbs.db
+
+# 4. IDE, Text Editors, and Tool configurations
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+
+# 5. Build outputs, logs, and temporary caches
+dist/
+build/
+out/
+*.log
+*.tmp
+.eslintcache
