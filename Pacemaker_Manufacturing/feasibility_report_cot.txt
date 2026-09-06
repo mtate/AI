@@ -1,0 +1,133 @@
+{
+  "capabilities_for_production": [
+    {
+      "capability": "Manufacturing Class III Medical Devices",
+      "evidence": "Existing product is a Class III Internal Pacemaker.",
+      "analysis": "The manufacturer has experience with Class III devices, which is relevant for the LVAD."
+    },
+    {
+      "capability": "Biocompatible Materials Processing",
+      "evidence": "Uses titanium and medical-grade silicone in existing products.",
+      "analysis": "The manufacturer can handle biocompatible materials, which is essential for the LVAD."
+    },
+    {
+      "capability": "Wireless Telemetry",
+      "evidence": "Existing pacemaker has wireless telemetry for remote adjustments.",
+      "analysis": "The manufacturer has the capability to integrate wireless communication, which is required for the LVAD."
+    },
+    {
+      "capability": "Sterilization Processes",
+      "evidence": "Uses EtO sterilization for existing products.",
+      "analysis": "The manufacturer can meet sterilization requirements for the LVAD."
+    }
+  ],
+  "gaps_and_limitations": [
+    {
+      "limitation": "Pump Type Capability",
+      "evidence": "Existing product is a pacemaker, not a blood pump.",
+      "analysis": "The manufacturer lacks experience in producing axial or centrifugal flow blood pumps, which is critical for the LVAD."
+    },
+    {
+      "limitation": "Flow Rate Adjustment",
+      "evidence": "Existing product does not specify flow rate capabilities.",
+      "analysis": "The manufacturer does not have established processes for adjustable flow rates of 2-10 L/min, which is essential for the LVAD."
+    },
+    {
+      "limitation": "Power Source Specifications",
+      "evidence": "Existing product uses a lithium-iodine battery.",
+      "analysis": "The proposed LVAD requires a rechargeable lithium-ion battery with specific voltage and capacity, which differs from the existing battery type."
+    },
+    {
+      "limitation": "Mechanical Components Expertise",
+      "evidence": "Existing product does not include a blood pump or related mechanical components.",
+      "analysis": "The manufacturer lacks experience with components like impellers and drive mechanisms necessary for the LVAD."
+    }
+  ],
+  "necessary_adjustments": [
+    {
+      "adjustment_required": "Develop Blood Pump Manufacturing Capability",
+      "evidence": "Proposed LVAD requires an axial or centrifugal flow blood pump.",
+      "analysis": "The manufacturer must invest in new processes and possibly equipment to develop the capability to produce blood pumps, which may take months and incur high costs."
+    },
+    {
+      "adjustment_required": "Implement Adjustable Flow Rate Mechanism",
+      "evidence": "Proposed LVAD requires adjustable flow rates.",
+      "analysis": "The manufacturer needs to design and validate a mechanism for flow rate adjustment, which could take months and involve medium costs."
+    },
+    {
+      "adjustment_required": "Acquire New Battery Technology",
+      "evidence": "Proposed LVAD requires a rechargeable lithium-ion battery.",
+      "analysis": "The manufacturer must source or develop a new battery system, which may take months and incur medium costs."
+    },
+    {
+      "adjustment_required": "Design and Validate Mechanical Components",
+      "evidence": "Proposed LVAD requires specific mechanical components like impellers and drive mechanisms.",
+      "analysis": "The manufacturer needs to design and validate these components, which could take years and incur high costs."
+    }
+  ],
+  "machinery_feasibility": [
+    {
+      "process_area": "PCB Assembly",
+      "existing_capability": "SMT and reflow soldering for electronic components.",
+      "required_for_proposed": "Similar PCB assembly for LVAD electronics.",
+      "gap_assessment": "Existing capability is sufficient for the proposed LVAD."
+    },
+    {
+      "process_area": "Mechanical Assembly",
+      "existing_capability": "Laser welding and ultrasonic bonding for pacemaker components.",
+      "required_for_proposed": "Assembly of blood pump components.",
+      "gap_assessment": "Existing machinery may need adaptation for new mechanical components."
+    }
+  ],
+  "compliance_assessment": [
+    {
+      "standard": "ISO 13485:2016",
+      "existing_status": "Certified",
+      "required_status": "Certified",
+      "gap": "None"
+    },
+    {
+      "standard": "IEC 60601-1 & IEC 60601-1-2",
+      "existing_status": "Compliant",
+      "required_status": "Compliant",
+      "gap": "None"
+    },
+    {
+      "standard": "ISO 14708-5",
+      "existing_status": "Not specified",
+      "required_status": "Compliant",
+      "gap": "Manufacturer needs to ensure compliance with this standard for active implantable devices."
+    },
+    {
+      "standard": "ISO 10993-1",
+      "existing_status": "Not specified",
+      "required_status": "Compliant",
+      "gap": "Manufacturer needs to ensure biocompatibility testing is conducted."
+    }
+  ],
+  "cost_drivers": [
+    {
+      "cost_driver": "Development of Blood Pump Technology",
+      "source_gap": "Pump Type Capability",
+      "relative_impact": "High",
+      "rationale": "Developing new technology for blood pumps is resource-intensive."
+    },
+    {
+      "cost_driver": "New Battery System Acquisition",
+      "source_gap": "Power Source Specifications",
+      "relative_impact": "Medium",
+      "rationale": "Sourcing or developing a new battery system incurs costs."
+    },
+    {
+      "cost_driver": "Mechanical Component Design and Validation",
+      "source_gap": "Mechanical Components Expertise",
+      "relative_impact": "High",
+      "rationale": "Designing and validating new mechanical components is complex and costly."
+    }
+  ],
+  "conclusion_recommendation": {
+    "overall_feasibility": "Low",
+    "key_considerations": "Pump Type Capability, Development of Blood Pump Technology, Mechanical Component Design and Validation",
+    "final_recommendation": "The manufacturer should focus on developing blood pump technology and mechanical components in-house, as well as acquiring new battery technology. A detailed project plan should be created to address these gaps, with a focus on compliance with ISO 14708-5 and ISO 10993-1."
+  }
+}
