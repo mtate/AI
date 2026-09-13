@@ -32,3 +32,4 @@ out/
 *.log
 *.tmp
 .eslintcache
+Nova_Tech/config.json
