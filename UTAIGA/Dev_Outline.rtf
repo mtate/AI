@@ -1,0 +1,1265 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2639
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\froman\fcharset0 Times-Bold;\f2\ftech\fcharset77 Symbol;
+\f3\fmodern\fcharset0 Courier;\f4\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red109\green109\blue109;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;\cssrgb\c50196\c50196\c50196;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}}{\leveltext\leveltemplateid1\'01\'00;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid201\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid3}
+{\list\listtemplateid4\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}}{\leveltext\leveltemplateid301\'01\'00;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid4}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}{\listoverride\listid4\listoverridecount0\ls4}}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Yes. I\'92d approach this as 
+\f1\b two related systems
+\f0\b0  rather than trying to build everything simultaneously:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
+\ls1\ilvl0
+\f1\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	1	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 A reliable financial RAG pipeline
+\f0\b0  \'97 ingestion 
+\f2 \uc0\u8594 
+\f0  normalization 
+\f2 \uc0\u8594 
+\f0  chunking 
+\f2 \uc0\u8594 
+\f0  embedding 
+\f2 \uc0\u8594 
+\f0  Chroma 
+\f2 \uc0\u8594 
+\f0  retrieval 
+\f2 \uc0\u8594 
+\f0  answer generation.\
+\ls1\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	2	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 An experimental/evaluation pipeline
+\f0\b0  \'97 benchmark questions 
+\f2 \uc0\u8594 
+\f0  DeepEval 
+\f2 \uc0\u8594 
+\f0  configuration experiments 
+\f2 \uc0\u8594 
+\f0  GEPA prompt optimization 
+\f2 \uc0\u8594 
+\f0  final validation.\
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 That separation will make debugging much easier. In particular, you want to know whether a bad answer came from 
+\f1\b retrieval
+\f0\b0 , 
+\f1\b generation
+\f0\b0 , or the 
+\f1\b prompt
+\f0\b0 .\
+\pard\pardeftab720\sa298\partightenfactor0
+
+\f1\b\fs36 \cf0 1. Define what the POC must demonstrate\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\b0\fs24 \cf0 Before coding, translate the objective into measurable requirements.\
+Your POC should demonstrate that a broker can ask questions such as:\
+\'93What risks did Apple identify in its latest 10-K?\'94\
+\'93Why did NVIDIA's margins change?\'94\
+\'93What has been the recent sentiment around Tesla?\'94\
+\'93Compare Microsoft's recent stock performance with Amazon.\'94\
+\'93What SEC disclosures support the claim that company X faces increasing regulatory risk?\'94\
+And receive something resembling:\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f1\b \cf0 Answer
+\f0\b0 \
+NVIDIA reported that gross margin declined primarily because of...\
+
+\f1\b Supporting evidence
+\f0\b0 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
+\ls2\ilvl0\cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 NVIDIA 10-Q, Item 2 \'97 Management Discussion\
+\ls2\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Reuters article, August 18, 2026\
+\ls2\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 NVIDIA price data, August 1\'9620, 2026\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f1\b \cf0 Confidence / evidence status
+\f0\b0 \
+Supported by SEC filing and recent market data.\
+The critical requirement is that the LLM shouldn't be answering financial questions merely from its pretrained knowledge. The answer should be derived from the retrieved context.\
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+\pard\pardeftab720\sa321\partightenfactor0
+
+\f1\b\fs48 \cf0 2. Proposed architecture\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\b0\fs24 \cf0 I would structure the system roughly like this:\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs26 \cf0              DATA INGESTION\
+                   |\
+       +-----------+-----------+\
+       |           |           |\
+     NEWS        PRICES       SEC\
+      CSV          CSV        TXT\
+       |           |           |\
+       +-----------+-----------+\
+                   |\
+              NORMALIZATION\
+                   |\
+             LangChain Docs\
+                   |\
+               CHUNKING\
+                   |\
+              EMBEDDINGS\
+                   |\
+                 CHROMA\
+                   |\
+             VECTOR STORE\
+                   |\
+                   v\
+Broker Question -> Retriever\
+                   |\
+              Top-K Chunks\
+                   |\
+                   v\
+             RAG Prompt\
+                   |\
+                   v\
+                  LLM\
+                   |\
+                   v\
+       Grounded Financial Answer\
+                   |\
+                   v\
+              DeepEval\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 Then place the optimization workflow around that pipeline:\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs26 \cf0 Benchmark Dataset\
+       |\
+       v\
++------------------+\
+| RAG Experiments  |\
++------------------+\
+       |\
+       +-- chunk_size\
+       +-- overlap\
+       +-- top_k\
+       +-- temperature\
+       +-- top_p\
+       +-- max_tokens\
+       |\
+       v\
+    DeepEval\
+       |\
+       v\
+Best RAG Configuration\
+       |\
+       v\
+GEPA Prompt Optimization\
+       |\
+       v\
+Optimized Prompt\
+       |\
+       v\
+Final RAG System\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 The important architectural decision here is that 
+\f1\b RAG configuration optimization and prompt optimization are distinct experiments
+\f0\b0 .\
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+\pard\pardeftab720\sa321\partightenfactor0
+
+\f1\b\fs48 \cf0 3. Phase 1 \'97 Normalize the three datasets\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\b0\fs24 \cf0 Don't dump the three raw files directly into Chroma.\
+Create a common document representation.\
+Something like:\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs26 \cf0 Document(\
+    page_content="...",\
+    metadata=\{\
+        "source_type": "news",\
+        "ticker": "NVDA",\
+        "company": "NVIDIA",\
+        "date": "2026-08-15",\
+        "source": "Reuters",\
+        "url": "...",\
+    \}\
+)\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 For SEC data:\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs26 \cf0 Document(\
+    page_content="...",\
+    metadata=\{\
+        "source_type": "sec",\
+        "ticker": "NVDA",\
+        "company": "NVIDIA",\
+        "filing_type": "10-K",\
+        "filing_date": "2026-03-01",\
+        "section": "Risk Factors",\
+    \}\
+)\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 And prices:\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs26 \cf0 Document(\
+    page_content=(\
+        "NVDA trading data for 2026-08-15: "\
+        "open 182.10, high 185.40, low 180.25, "\
+        "close 184.75, volume 142000000."\
+    ),\
+    metadata=\{\
+        "source_type": "price",\
+        "ticker": "NVDA",\
+        "date": "2026-08-15",\
+    \}\
+)\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 This metadata will become extremely useful later.\
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+\pard\pardeftab720\sa321\partightenfactor0
+
+\f1\b\fs48 \cf0 4. Treat price data differently from text\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\b0\fs24 \cf0 This is one area where I would deviate from a simplistic RAG implementation.\
+News and SEC filings are naturally suited to semantic embeddings.\
+Raw OHLCV price records are not.\
+For example:\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs26 \cf0 AAPL 204.10 208.33 203.44 207.81 67389231\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 doesn't have much semantic meaning to an embedding model.\
+Instead, transform price data into meaningful financial statements or calculate statistics before embedding them.\
+For example:\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs26 \cf0 Apple (AAPL)\
+Period: August 1\'9631, 2026\
+\
+Starting close: $X\
+Ending close: $Y\
+Return: +4.7%\
+Highest close: $Z\
+Lowest close: $W\
+Average volume: ...\
+Volatility: ...\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 Better still, maintain a small 
+\f1\b structured analytics layer
+\f0\b0  for price questions.\
+That gives you a hybrid architecture:\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs26 \cf0 Question\
+   |\
+   +---------------------+\
+   |                     |\
+Semantic information   Quantitative information\
+   |                     |\
+Chroma                 Pandas/Python\
+   |                     |\
+News + SEC             Price calculations\
+   |                     |\
+   +----------+----------+\
+              |\
+              v\
+             LLM\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 This will give you substantially better answers to questions such as:\
+\'93How has Apple performed compared with Microsoft over the past 30 days?\'94\
+Rather than hoping an embedding search happens to retrieve the correct daily price rows.\
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+\pard\pardeftab720\sa321\partightenfactor0
+
+\f1\b\fs48 \cf0 5. Phase 2 \'97 Establish a baseline RAG system\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\b0\fs24 \cf0 Do 
+\f1\b not
+\f0\b0  start with GEPA.\
+First establish a boring, predictable baseline.\
+For example:\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs26 \cf0 BASELINE_CONFIG = \{\
+    "chunk_size": 1000,\
+    "chunk_overlap": 150,\
+    "top_k": 5,\
+    "temperature": 0.0,\
+    "top_p": 1.0,\
+    "max_tokens": 800\
+\}\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 Then implement:\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs26 \cf0 Question\
+   
+\f4 \uc0\u8595 
+\f3 \
+Embedding\
+   
+\f4 \uc0\u8595 
+\f3 \
+Chroma similarity search\
+   
+\f4 \uc0\u8595 
+\f3 \
+Top 5 chunks\
+   
+\f4 \uc0\u8595 
+\f3 \
+Prompt\
+   
+\f4 \uc0\u8595 
+\f3 \
+LLM\
+   
+\f4 \uc0\u8595 
+\f3 \
+Answer\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 A baseline prompt might conceptually say:\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs26 \cf0 You are a financial intelligence assistant for brokerage professionals.\
+\
+Answer the question using only the supplied context.\
+\
+Requirements:\
+- Do not introduce facts unsupported by the context.\
+- Clearly distinguish facts from interpretation.\
+- Cite the supporting sources.\
+- If the context is insufficient, say so.\
+- When discussing financial changes, explain the evidence supporting\
+  the conclusion.\
+- Keep the response concise enough for a broker preparing for a\
+  client discussion.\
+\
+CONTEXT:\
+\{context\}\
+\
+QUESTION:\
+\{question\}\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 That gives you something measurable before optimization begins.\
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+\pard\pardeftab720\sa321\partightenfactor0
+
+\f1\b\fs48 \cf0 6. Phase 3 \'97 Build a serious golden dataset\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\b0\fs24 \cf0 This may be the most important part of the project.\
+I would create perhaps 
+\f1\b 50\'96100 benchmark questions
+\f0\b0  distributed across different question types.\
+For example:\
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth2006\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth6075\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\qc\partightenfactor0
+
+\f1\b \cf0 Category\cell 
+\pard\intbl\itap1\pardeftab720\qc\partightenfactor0
+\cf0 Example\cell \row
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth2006\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth6075\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+
+\f0\b0 \cf0 SEC factual\cell 
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+\cf0 What was Microsoft's FY2025 revenue?\cell \row
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth2006\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth6075\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+\cf0 SEC risk\cell 
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+\cf0 What cybersecurity risks did Microsoft disclose?\cell \row
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth2006\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth6075\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+\cf0 Earnings\cell 
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+\cf0 Why did operating margins decline?\cell \row
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth2006\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth6075\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+\cf0 News\cell 
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+\cf0 What recent developments affected Tesla?\cell \row
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth2006\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth6075\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+\cf0 Sentiment\cell 
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+\cf0 What is the recent sentiment surrounding NVIDIA?\cell \row
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth2006\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth6075\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+\cf0 Price\cell 
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+\cf0 How has AAPL performed during the last month?\cell \row
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth2006\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth6075\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+\cf0 Comparison\cell 
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+\cf0 Compare AAPL and MSFT performance.\cell \row
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth2006\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth6075\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+\cf0 Cross-source\cell 
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+\cf0 Do recent news reports support management's risk disclosures?\cell \row
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth2006\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth6075\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+\cf0 Insufficient evidence\cell 
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+\cf0 Did Apple announce a stock split yesterday?\cell \lastrow\row
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 For each benchmark record, I'd store more than just question/answer.\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs26 \cf0 \{\
+    "id": "SEC_001",\
+    "category": "sec_risk",\
+    "question": "What major supply-chain risks were disclosed?",\
+    "expected_answer": "...",\
+    "expected_sources": [\
+        "company_10k_2025"\
+    ],\
+    "expected_facts": [\
+        "...",\
+        "..."\
+    ]\
+\}\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 That lets you evaluate 
+\f1\b retrieval independently from generation
+\f0\b0 .\
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+\pard\pardeftab720\sa321\partightenfactor0
+
+\f1\b\fs48 \cf0 7. Evaluate retrieval before evaluating answers\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\b0\fs24 \cf0 This is a step that is frequently missed in RAG projects.\
+Suppose the correct information is in SEC chunk 127.\
+Your retriever returns:\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs26 \cf0 chunk 4\
+chunk 32\
+chunk 76\
+chunk 91\
+chunk 103\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 No prompt engineering in the world will repair that.\
+So measure retrieval separately.\
+Useful metrics include:\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs26 \cf0 Recall@K\
+Precision@K\
+MRR\
+Hit Rate\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 For example:\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs26 \cf0 Question:\
+"Why did margins decline?"\
+\
+Expected relevant chunk:\
+SEC_127\
+\
+Retrieved:\
+SEC_127\
+NEWS_44\
+SEC_130\
+NEWS_76\
+SEC_94\
+\
+Hit@5 = 1\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 This establishes whether 
+\f1\b Chroma retrieval itself is working
+\f0\b0 .\
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+\pard\pardeftab720\sa321\partightenfactor0
+
+\f1\b\fs48 \cf0 8. Phase 4 \'97 DeepEval evaluation\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\b0\fs24 \cf0 Then evaluate the generated answer.\
+Your stated objectives already give you a good starting set:\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f1\b \cf0 Faithfulness
+\f0\b0 \
+Does the answer make claims that are actually supported by the retrieved context?\
+
+\f1\b Groundedness
+\f0\b0 \
+Is the answer based on supplied financial evidence rather than model knowledge?\
+
+\f1\b Answer relevance
+\f0\b0 \
+Did it actually answer the broker's question?\
+
+\f1\b Contextual relevance
+\f0\b0 \
+Did the retriever retrieve useful material?\
+
+\f1\b Actionability
+\f0\b0 \
+Is the answer useful to a broker preparing for a client conversation?\
+I'd also strongly consider a metric around 
+\f1\b citation/source correctness
+\f0\b0 .\
+For financial RAG, a polished answer with the wrong supporting document is a serious failure.\
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+\pard\pardeftab720\sa321\partightenfactor0
+
+\f1\b\fs48 \cf0 9. Phase 5 \'97 RAG configuration experiments\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\b0\fs24 \cf0 Now run controlled experiments.\
+Don't change six parameters simultaneously.\
+Start with retrieval parameters.\
+\pard\pardeftab720\sa280\partightenfactor0
+
+\f1\b\fs28 \cf0 Experiment A \'97 Chunk size\
+\pard\pardeftab720\partightenfactor0
+
+\f3\b0\fs26 \cf0 500\
+750\
+1000\
+1500\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 Hold everything else constant.\
+Measure:\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs26 \cf0 Faithfulness\
+Context relevance\
+Answer relevance\
+Retrieval Recall@K\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 Then test overlap:\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs26 \cf0 50\
+100\
+150\
+250\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 Then 
+\f3\fs26 top_k
+\f0\fs24 :\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs26 \cf0 3\
+5\
+8\
+10\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 After finding a strong retrieval configuration, test generation.\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs26 \cf0 temperature:\
+0.0\
+0.1\
+0.2\
+0.3\
+\
+top_p:\
+0.8\
+0.9\
+1.0\
+\
+max_tokens:\
+400\
+800\
+1200\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 For financial QA, I would expect relatively low temperatures to perform well, but your benchmark should establish that rather than assuming it.\
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+\pard\pardeftab720\sa321\partightenfactor0
+
+\f1\b\fs48 \cf0 10. Keep an experiment results table\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\b0\fs24 \cf0 Create something like:\
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth440\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx864
+\clvertalc \clshdrawnil \clwWidth707\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx1728
+\clvertalc \clshdrawnil \clwWidth840\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx2592
+\clvertalc \clshdrawnil \clwWidth186\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx3456
+\clvertalc \clshdrawnil \clwWidth578\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth618\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx5184
+\clvertalc \clshdrawnil \clwWidth546\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx6048
+\clvertalc \clshdrawnil \clwWidth809\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx6912
+\clvertalc \clshdrawnil \clwWidth1039\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx7776
+\clvertalc \clshdrawnil \clwWidth680\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\qc\partightenfactor0
+
+\f1\b \cf0 Run\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 Chunk\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 Overlap\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 K\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 Temp\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 Top-P\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 Faith\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 Ground\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 Relevance\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 Action\cell \row
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth440\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx864
+\clvertalc \clshdrawnil \clwWidth707\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx1728
+\clvertalc \clshdrawnil \clwWidth840\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx2592
+\clvertalc \clshdrawnil \clwWidth186\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx3456
+\clvertalc \clshdrawnil \clwWidth578\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth618\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx5184
+\clvertalc \clshdrawnil \clwWidth546\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx6048
+\clvertalc \clshdrawnil \clwWidth809\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx6912
+\clvertalc \clshdrawnil \clwWidth1039\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx7776
+\clvertalc \clshdrawnil \clwWidth680\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+
+\f0\b0 \cf0 001\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 500\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 100\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 3\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 0\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 1\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 .87\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 .91\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 .82\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 .78\cell \row
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth440\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx864
+\clvertalc \clshdrawnil \clwWidth707\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx1728
+\clvertalc \clshdrawnil \clwWidth840\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx2592
+\clvertalc \clshdrawnil \clwWidth186\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx3456
+\clvertalc \clshdrawnil \clwWidth578\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth618\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx5184
+\clvertalc \clshdrawnil \clwWidth546\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx6048
+\clvertalc \clshdrawnil \clwWidth809\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx6912
+\clvertalc \clshdrawnil \clwWidth1039\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx7776
+\clvertalc \clshdrawnil \clwWidth680\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+\cf0 002\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 500\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 100\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 5\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 0\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 1\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 .91\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 .93\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 .88\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 .84\cell \row
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth440\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx864
+\clvertalc \clshdrawnil \clwWidth707\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx1728
+\clvertalc \clshdrawnil \clwWidth840\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx2592
+\clvertalc \clshdrawnil \clwWidth186\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx3456
+\clvertalc \clshdrawnil \clwWidth578\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth618\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx5184
+\clvertalc \clshdrawnil \clwWidth546\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx6048
+\clvertalc \clshdrawnil \clwWidth809\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx6912
+\clvertalc \clshdrawnil \clwWidth1039\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx7776
+\clvertalc \clshdrawnil \clwWidth680\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+\cf0 003\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 1000\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 150\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 5\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 0\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 1\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 .94\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 .95\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 .91\cell 
+\pard\intbl\itap1\pardeftab720\qr\partightenfactor0
+\cf0 .87\cell \lastrow\row
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 But don't immediately collapse everything into a single average.\
+For example:\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs26 \cf0 Config A\
+\
+Faithfulness     .96\
+Groundedness     .95\
+Relevance        .88\
+Actionability    .82\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 could be preferable to:\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs26 \cf0 Config B\
+\
+Faithfulness     .83\
+Groundedness     .84\
+Relevance        .96\
+Actionability    .94\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 for a brokerage use case because unsupported financial claims should probably carry a heavier penalty.\
+That is exactly where Pareto-style analysis becomes useful.\
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+\pard\pardeftab720\sa321\partightenfactor0
+
+\f1\b\fs48 \cf0 11. Phase 6 \'97 GEPA optimization\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\b0\fs24 \cf0 Only after establishing the RAG configuration would I introduce GEPA.\
+The relationship should be:\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs26 \cf0 Golden Dataset\
+       
+\f4 \uc0\u8595 
+\f3 \
+Best RAG retrieval configuration\
+       
+\f4 \uc0\u8595 
+\f3 \
+Initial Prompt\
+       
+\f4 \uc0\u8595 
+\f3 \
+GEPA\
+       
+\f4 \uc0\u8595 
+\f3 \
+Candidate Prompts\
+       
+\f4 \uc0\u8595 
+\f3 \
+DeepEval\
+       
+\f4 \uc0\u8595 
+\f3 \
+Faithfulness\
+Groundedness\
+Relevance\
+Actionability\
+       
+\f4 \uc0\u8595 
+\f3 \
+Pareto Selection\
+       
+\f4 \uc0\u8595 
+\f3 \
+Optimized Prompt\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 This isolates prompt improvements from retrieval improvements.\
+Otherwise, GEPA can end up trying to compensate for bad retrieval.\
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+\pard\pardeftab720\sa321\partightenfactor0
+
+\f1\b\fs48 \cf0 12. Prevent benchmark leakage\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\b0\fs24 \cf0 One important experimental issue: don't optimize and report results using the same questions.\
+Divide your benchmark into something like:\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs26 \cf0 Training / Optimization    60%\
+Validation                 20%\
+Final Test                 20%\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 For 100 questions:\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs26 \cf0 60 optimization\
+20 validation\
+20 final holdout\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 GEPA gets the first set.\
+You select configurations using validation.\
+The final test set should remain untouched until the end.\
+Otherwise your optimized prompt may simply be overfitted to the benchmark.\
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+\pard\pardeftab720\sa321\partightenfactor0
+
+\f1\b\fs48 \cf0 13. Add financial-specific guardrails\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\b0\fs24 \cf0 Your final answering prompt should force several behaviors.\
+The model should:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
+\ls3\ilvl0\cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 use retrieved evidence rather than unsupported prior knowledge;\
+\ls3\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 distinguish 
+\f1\b fact, inference, and market commentary
+\f0\b0 ;\
+\ls3\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 identify dates because financial facts rapidly become stale;\
+\ls3\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 cite SEC/news sources;\
+\ls3\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 avoid inventing reasons for stock movements;\
+\ls3\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 say when evidence is insufficient;\
+\ls3\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 avoid interpreting correlation as causation;\
+\ls3\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 clearly identify calculations derived from price data;\
+\ls3\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 avoid presenting the system's output as personalized investment advice.\
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 This becomes particularly important for questions such as:\
+\'93Why did Tesla fall 8%?\'94\
+The correct answer might be:\
+Tesla declined 8% during the period. The retrieved articles discuss weaker-than-expected deliveries and regulatory concerns, but the available evidence does not establish that either factor alone caused the decline.\
+That's a much better financial RAG answer than:\
+Tesla fell because deliveries were weak.\
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+\pard\pardeftab720\sa321\partightenfactor0
+
+\f1\b\fs48 \cf0 14. Add source-aware retrieval\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\b0\fs24 \cf0 Because you have three very different data sources, I'd eventually move beyond:\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs26 \cf0 retriever.invoke(question)\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 toward query classification.\
+For example:\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs26 \cf0 "What risks did Nvidia disclose?"\
+            
+\f4 \uc0\u8595 
+\f3 \
+          SEC\
+\
+"What news affected Nvidia this week?"\
+            
+\f4 \uc0\u8595 
+\f3 \
+          NEWS\
+\
+"How much did Nvidia rise this month?"\
+            
+\f4 \uc0\u8595 
+\f3 \
+         PRICES\
+\
+"Did Nvidia's stock reaction align with\
+the risks discussed in its earnings?"\
+            
+\f4 \uc0\u8595 
+\f3 \
+      SEC + NEWS + PRICES\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 A simple router could return:\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs26 \cf0 \{\
+    "use_sec": True,\
+    "use_news": True,\
+    "use_prices": False\
+\}\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 You can then use Chroma metadata filters:\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs26 \cf0 filter=\{"source_type": "sec"\}\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 instead of searching everything.\
+That should substantially reduce irrelevant retrieval.\
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+\pard\pardeftab720\sa321\partightenfactor0
+
+\f1\b\fs48 \cf0 15. I would organize the codebase this way\
+\pard\pardeftab720\partightenfactor0
+
+\f3\b0\fs26 \cf0 financial_rag/\
+
+\f4 \uc0\u9474 
+\f3 \
+
+\f4 \uc0\u9500 \u9472 \u9472 
+\f3  data/\
+
+\f4 \uc0\u9474 
+\f3    
+\f4 \uc0\u9500 \u9472 \u9472 
+\f3  global_news.csv\
+
+\f4 \uc0\u9474 
+\f3    
+\f4 \uc0\u9500 \u9472 \u9472 
+\f3  all_prices_clean.csv\
+
+\f4 \uc0\u9474 
+\f3    
+\f4 \uc0\u9492 \u9472 \u9472 
+\f3  sec_filings.txt\
+
+\f4 \uc0\u9474 
+\f3 \
+
+\f4 \uc0\u9500 \u9472 \u9472 
+\f3  ingestion/\
+
+\f4 \uc0\u9474 
+\f3    
+\f4 \uc0\u9500 \u9472 \u9472 
+\f3  news_loader.py\
+
+\f4 \uc0\u9474 
+\f3    
+\f4 \uc0\u9500 \u9472 \u9472 
+\f3  price_loader.py\
+
+\f4 \uc0\u9474 
+\f3    
+\f4 \uc0\u9492 \u9472 \u9472 
+\f3  sec_loader.py\
+
+\f4 \uc0\u9474 
+\f3 \
+
+\f4 \uc0\u9500 \u9472 \u9472 
+\f3  preprocessing/\
+
+\f4 \uc0\u9474 
+\f3    
+\f4 \uc0\u9500 \u9472 \u9472 
+\f3  normalization.py\
+
+\f4 \uc0\u9474 
+\f3    
+\f4 \uc0\u9500 \u9472 \u9472 
+\f3  chunking.py\
+
+\f4 \uc0\u9474 
+\f3    
+\f4 \uc0\u9492 \u9472 \u9472 
+\f3  price_features.py\
+
+\f4 \uc0\u9474 
+\f3 \
+
+\f4 \uc0\u9500 \u9472 \u9472 
+\f3  vectorstore/\
+
+\f4 \uc0\u9474 
+\f3    
+\f4 \uc0\u9500 \u9472 \u9472 
+\f3  embeddings.py\
+
+\f4 \uc0\u9474 
+\f3    
+\f4 \uc0\u9492 \u9472 \u9472 
+\f3  chroma_store.py\
+
+\f4 \uc0\u9474 
+\f3 \
+
+\f4 \uc0\u9500 \u9472 \u9472 
+\f3  retrieval/\
+
+\f4 \uc0\u9474 
+\f3    
+\f4 \uc0\u9500 \u9472 \u9472 
+\f3  retriever.py\
+
+\f4 \uc0\u9474 
+\f3    
+\f4 \uc0\u9500 \u9472 \u9472 
+\f3  router.py\
+
+\f4 \uc0\u9474 
+\f3    
+\f4 \uc0\u9492 \u9472 \u9472 
+\f3  filters.py\
+
+\f4 \uc0\u9474 
+\f3 \
+
+\f4 \uc0\u9500 \u9472 \u9472 
+\f3  generation/\
+
+\f4 \uc0\u9474 
+\f3    
+\f4 \uc0\u9500 \u9472 \u9472 
+\f3  prompts.py\
+
+\f4 \uc0\u9474 
+\f3    
+\f4 \uc0\u9492 \u9472 \u9472 
+\f3  rag_chain.py\
+
+\f4 \uc0\u9474 
+\f3 \
+
+\f4 \uc0\u9500 \u9472 \u9472 
+\f3  evaluation/\
+
+\f4 \uc0\u9474 
+\f3    
+\f4 \uc0\u9500 \u9472 \u9472 
+\f3  golden_dataset.py\
+
+\f4 \uc0\u9474 
+\f3    
+\f4 \uc0\u9500 \u9472 \u9472 
+\f3  retrieval_metrics.py\
+
+\f4 \uc0\u9474 
+\f3    
+\f4 \uc0\u9500 \u9472 \u9472 
+\f3  deepeval_metrics.py\
+
+\f4 \uc0\u9474 
+\f3    
+\f4 \uc0\u9492 \u9472 \u9472 
+\f3  evaluate.py\
+
+\f4 \uc0\u9474 
+\f3 \
+
+\f4 \uc0\u9500 \u9472 \u9472 
+\f3  experiments/\
+
+\f4 \uc0\u9474 
+\f3    
+\f4 \uc0\u9500 \u9472 \u9472 
+\f3  rag_grid_search.py\
+
+\f4 \uc0\u9474 
+\f3    
+\f4 \uc0\u9500 \u9472 \u9472 
+\f3  results.csv\
+
+\f4 \uc0\u9474 
+\f3    
+\f4 \uc0\u9492 \u9472 \u9472 
+\f3  analyze_results.py\
+
+\f4 \uc0\u9474 
+\f3 \
+
+\f4 \uc0\u9500 \u9472 \u9472 
+\f3  optimization/\
+
+\f4 \uc0\u9474 
+\f3    
+\f4 \uc0\u9492 \u9472 \u9472 
+\f3  gepa_optimizer.py\
+
+\f4 \uc0\u9474 
+\f3 \
+
+\f4 \uc0\u9500 \u9472 \u9472 
+\f3  config.py\
+
+\f4 \uc0\u9492 \u9472 \u9472 
+\f3  main.py\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 This will be much easier to work with than putting ingestion, Chroma, LangChain, DeepEval and GEPA into one notebook.\
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+\pard\pardeftab720\sa321\partightenfactor0
+
+\f1\b\fs48 \cf0 16. Recommended implementation sequence\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\b0\fs24 \cf0 I'd implement the project in this order:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
+\ls4\ilvl0
+\f1\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	1	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Load and inspect the three datasets.
+\f0\b0  Determine exactly what fields and document boundaries are available.\
+\ls4\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	2	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Normalize metadata.
+\f0\b0  Establish common fields such as ticker, company, date and source type.\
+\ls4\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	3	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Build SEC/news chunking.
+\f0\b0  Preserve document and section identity in every chunk.\
+\ls4\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	4	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Build price analytics.
+\f0\b0  Calculate returns/trends rather than blindly embedding thousands of OHLC rows.\
+\ls4\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	5	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Create Chroma.
+\f0\b0  Persist embeddings locally.\
+\ls4\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	6	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Build the basic retriever.
+\f0\b0  Test retrieval manually before adding an LLM.\
+\ls4\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	7	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Build the baseline RAG chain.
+\f0\b0  Use a conservative grounded-answer prompt.\
+\ls4\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	8	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Build the golden dataset.
+\f0\b0  Include SEC, news, prices, cross-source and deliberately unanswerable questions.\
+\ls4\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	9	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Measure retrieval.
+\f0\b0  Establish Recall@K/Hit@K before blaming the LLM.\
+\ls4\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	10	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Integrate DeepEval.
+\f0\b0  Establish baseline generation scores.\
+\ls4\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	11	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Run RAG configuration experiments.
+\f0\b0  Tune chunking 
+\f2 \uc0\u8594 
+\f0  K 
+\f2 \uc0\u8594 
+\f0  generation parameters.\
+\ls4\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	12	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Select the strongest configuration.
+\f0\b0 \
+\ls4\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	13	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Run GEPA prompt optimization.
+\f0\b0 \
+\ls4\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	14	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Evaluate the optimized prompt on held-out questions.
+\f0\b0 \
+\ls4\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	15	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Build the final broker response format.
+\f0\b0  Answer + evidence + sources + dates + evidence limitations.\
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 The key principle throughout is 
+\f1\b retrieval first, generation second, optimization third
+\f0\b0 .\
+One thing I would specifically avoid is starting with GEPA and asking it to improve your results. If retrieval is wrong, prompt optimization can actually obscure the underlying problem by producing increasingly convincing answers from inadequate evidence.\
+Given the objective you've been given, your next concrete milestone should be 
+\f1\b the baseline ingestion 
+\f2\b0 \uc0\u8594 
+\f1\b  Chroma 
+\f2\b0 \uc0\u8594 
+\f1\b  retrieval pipeline plus the golden dataset schema
+\f0\b0 . Once those are sound, DeepEval and GEPA become much more straightforward.\
+}
