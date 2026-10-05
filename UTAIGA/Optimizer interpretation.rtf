@@ -1,0 +1,126 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2639
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fswiss\fcharset0 ArialMT;\f2\fmodern\fcharset0 Courier;
+\f3\fswiss\fcharset0 Arial-BoldMT;\f4\fnil\fcharset0 Menlo-Bold;\f5\fmodern\fcharset0 Courier-Bold;
+}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red255\green255\blue11;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;\cssrgb\c100000\c100000\c0;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}}{\leveltext\leveltemplateid201\'01\'00;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid3}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Optimizer interpretation\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f1\fs32 \cf0 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 This output tells you that \cb3 your original prompt (
+\f2\fs28 root
+\f1\fs32 ) was already highly optimized, and none of the mutation attempts were able to beat it\cb1 .\
+Here is exactly how to break down and read the two tables:\
+\pard\pardeftab720\partightenfactor0
+
+\fs28 \cf0 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\b\fs40 \cf0 1. The GEPA Evolutionary Mutations Table\
+\pard\pardeftab720\partightenfactor0
+
+\f1\b0\fs32 \cf0 This table tracks DeepEval\'92s attempts to modify your prompt across 5 evolutionary generations.\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
+\ls1\ilvl0
+\f3\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Before (0.9000):
+\f1\b0  This was the baseline aggregate score of your prompt before that generation's mutations were applied.\
+\ls1\ilvl0
+\f3\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 After (1.0000):
+\f1\b0  This looks like an improvement at first glance, but notice the 
+\f3\b Note: "Skipped (minibatch score did not improve)"
+\f1\b0 .\
+\ls1\ilvl0
+\f3\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Why was it skipped?
+\f1\b0  DeepEval tests variations on smaller "minibatches" of your data first. If a mutation performs poorly on a minibatch, DeepEval discards it completely to save time and API costs. It marks it as 
+\f4\b\fs28 \uc0\u8631 
+\f5  skipped
+\f1\b0\fs32  and rolls back to your previous score (0.9000). Your global score never actually updated to that 1.0000.\
+\pard\pardeftab720\partightenfactor0
+
+\fs28 \cf0 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\b\fs40 \cf0 2. The Final Pareto Archive Table\
+\pard\pardeftab720\partightenfactor0
+
+\f1\b0\fs32 \cf0 This is the final leaderboard showing the absolute best prompt variations discovered.\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
+\ls2\ilvl0
+\f3\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Config ID (
+\f5\fs28 241a7b35\'85 
+\f4 \uc0\u9733 
+\f3\fs32 ):
+\f1\b0  The star icon (
+\f4\b\fs28 \uc0\u9733 
+\f1\b0\fs32 ) indicates the winning prompt template.\
+\ls2\ilvl0
+\f3\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Role (
+\f5\fs28 root
+\f3\fs32 ):
+\f1\b0  The word 
+\f2\fs28 root
+\f1\fs32  means 
+\f3\b your original prompt won
+\f1\b0 . None of the synthetic mutations outscored it on your full dataset.\
+\ls2\ilvl0
+\f3\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Scores (
+\f5\fs28 [0.800, 1.000]
+\f3\fs32 ):
+\f1\b0  This shows the distribution of scores across your test cases. Some queries scored 
+\f2\fs28 0.800
+\f1\fs32  on Answer Relevancy, while others scored a perfect 
+\f2\fs28 1.000
+\f1\fs32 .\
+\ls2\ilvl0
+\f3\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Aggregate (
+\f5\fs28 0.9000
+\f3\fs32 ):
+\f1\b0  Your final prompt achieved a stellar overall score of 
+\f3\b 90%
+\f1\b0 .\
+\pard\pardeftab720\partightenfactor0
+
+\fs28 \cf0 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\b\fs40 \cf0 What should you do next?\
+\pard\pardeftab720\partightenfactor0
+
+\f1\b0\fs32 \cf0 Because your baseline prompt was already scoring a high 90%, the algorithm had a very hard time finding any meaningful structural tweaks to improve it.\
+If you want to push it further:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
+\ls3\ilvl0
+\f3\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	1	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Look at the failures:
+\f1\b0  Pull up the test cases that scored 
+\f2\fs28 0.800
+\f1\fs32 . Are they missing crucial details?\
+\ls3\ilvl0
+\f3\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	2	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Expand your dataset:
+\f1\b0  3 test cases are great for debugging, but too small for optimization. If you increase 
+\f2\fs28 test_goldens
+\f1\fs32  to 15 or 20 diverse financial questions, DeepEval will have enough variance to find mutations that beat your 
+\f2\fs28 root
+\f1\fs32  prompt.\
+\pard\pardeftab720\partightenfactor0
+\cf0 To see the exact prompt string that won (even if it's just your original one), you can access it by printing 
+\f5\b\fs28 optimized_prompt.template
+\f1\b0\fs32  in your next cell!\
+}
