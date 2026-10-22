@@ -1,0 +1,7 @@
+{
+    "LANGCHAIN_TRACING_V2": "true",
+    "LANGCHAIN_API_KEY": "your_langsmith_api_key",
+    "LANGCHAIN_PROJECT": "your_langsmith_project_name",
+    "OPENAI_API_KEY": "your-openai-key",
+    "OPENAI_API_BASE": "your-openai-base",
+}
